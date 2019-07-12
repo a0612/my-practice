@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="./jquery.js"></script>
+</head>
+<body>
+  <input type="text" id="input"/>
+  <button id="button">提交</button>
+  <ul id="list"></ul>
+  <script>
+    // MVP设计模式
+    // Model: 数据层(从服务端或者哪里获取数据)
+    // Presenter: 控制器（处理业务逻辑，大量处理是修改dom）
+    // View: 视图层（显示数据）
+    function Page() {}
+    $.extend(Page.prototype, {
+      init: function(){
+        this.bindEvent()
+      },
+      bindEvent: function(){
+        var btn = $("#button");
+        btn.on('click', $.proxy(this.handleBtnClick, this))
+      },
+      handleBtnClick: function(){
+        console.log(123)
+        var inputElem = $("#input")
+        var inputValue = inputElem.val();
+        var ulElem = $('#list')
+        ulElem.append('<li>' + inputValue + '</li>')
+        inputElem.val("")
+      },
+    })
+    var page = new Page();
+    page.init();
+  </script>
+</body>
+</html>

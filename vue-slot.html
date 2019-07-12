@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>vue 插槽slot的使用</title>
+  <script src="./vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <child>
+      这是默认的插槽
+      <div class="header" slot="header">header具名插槽</div>
+      <div class="footer" slot="footer">footer具名插槽</div>
+    </child>
+    <child-1>
+      <template slot-scope="props">
+        <li>{{props.item}} - hello</li>
+      </template>
+    </child-1>
+  </div>
+  <script>
+
+    Vue.component('child', {
+      template: `<div>
+                  <slot name="header"></slot>
+                  <p>hello</p>
+                  <slot>我是默认值</slot>
+                  <slot name="footer"></slot>
+                 </div>`,
+
+    })
+    // 作用域插槽
+    // 在子组件的slot内:item=item把组件内的属性传递到父组件内，在父组件里面需要用slot-scope来获取这个值，然后使用
+    Vue.component('child-1', {
+      data: function() {
+        return {
+          list: [1,2,3,4],
+        }
+      },
+      template: `<div>
+                  <ul>
+                    <slot v-for="item in list" :item=item>
+
+                    </slot>
+                  </ul>
+                 </div>`,
+    })
+
+    var vm = new Vue({
+      el: '#app',
+    })
+  </script>
+</body>
+</html>

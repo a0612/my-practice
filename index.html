@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hello</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <div class="block" @click="handleClick">
+            {{message}}
+        </div>
+        <item></item>
+    </div>
+    <script>
+        // 以$开头的，一般是vue的实例属性或者实例方法
+        // 生命周期函数，是指在vue实例的某个时间点会自动执行的函数
+        Vue.component('item', {
+            template: '<div>hello item!</div>'
+        })
+        var vm = new Vue({
+            el: "#root", // 实例负责管理的区域
+            data: {
+                message: 'hello world!'
+            },
+            components: {},
+            methods: {
+                handleClick: function() {
+                    console.log(this.message)
+                }
+            },
+            // 基础的初始化之后执行
+            beforeCreate: function() {
+                console.log('beforeCreate')
+            },
+            // 处理外部的注入，处理双向绑定的操作
+            created: function(){
+                console.log('created')
+            },
+            // 判断是否有el这个选项
+            // 有的话会判断template选项
+            // 有的话会以template模板来渲染，如果没有的话会以el这个html元素的内容作为模板渲染
+
+            // 模板和数据挂载之前会执行beforeMount函数
+            beforeMount: function() {
+                console.log(this.$el)
+                console.log('beforeMount');
+            },
+            // vue实例生成的dom元素会被挂载到页面之上，然后mounted会执行
+            mounted: function(){
+                console.log(this.$el)
+                console.log('mounted');
+            },
+            beforeDestroy: function() {
+                console.log('beforeDestroy')
+            },
+            destroyed: function() {
+                console.log('destroyed')
+            },
+            beforeUpdate: function() {
+                console.log('beforeUpdate')
+            },
+            updated: function() {
+                console.log('updated')
+            },
+        })
+    </script>
+</body>
+</html>

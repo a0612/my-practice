@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>To do list</title>
+  <script src="./vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <input type="text" v-model="inputValue">
+    <input type="submit" value="提交" @click="handleBtnClick">
+    <ul class="list">
+      <todo-item v-for="(item, index) in dolist" @delete="deleteItem" v-bind:content="item" :index="index" :key="index"></todo-item>
+    </ul>
+  </div>
+  <script>
+    // MVVM设计模式
+    // Model: 数据层(从服务端或者哪里获取数据)
+    // View: 视图层（显示数据）
+    // ViewModel: Vue实现，利用Object.defineProperties()和虚拟dom来实现
+
+    // 全局组件,可以直接使用
+    // Vue.component("TodoItem", {
+    //   props: ['content'],
+    //   template: "<li>{{content}}</li>"
+    // })
+    // 局部组件，使用的时候需要先注册
+    var TodoItem = {
+      props: ['content', 'index'],
+      template: "<li @click='deleteItem(index)'>{{content}}</li>",
+      methods: {
+        deleteItem: function(index){
+          this.$emit('delete', index)
+        },
+      }
+    }
+
+    var app = new Vue({
+      el: '#app',
+      components: {
+        TodoItem: TodoItem,
+      },
+      data: {
+        dolist: [],
+        inputValue: '',
+      },
+      methods: {
+        handleBtnClick() {
+          console.log(this.inputValue)
+          this.dolist.push(this.inputValue)
+          this.inputValue = ''
+        },
+        deleteItem(index) {
+          console.log(`删除 index === ${index}的项`);
+          this.dolist.splice(index, 1)
+        },
+      },
+    })
+  </script>
+</body>
+</html>

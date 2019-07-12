@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>vue 组件学习</title>
+  <script src="./vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <conter ref="one" :num="one" @change="handleChangeOne"></conter>
+    <conter ref="two" :num="two" @change="handleChangeTwo"></conter>
+    <div>{{total}}</div>
+  </div>
+  <script>
+    Vue.component('conter', {
+      // props特性：父组件传了一个值，然后在子组件里的props里面也声明了这个值的接收，在html dom标签属性内不会展示出这个属性，并且在子组件里可以直接用this访问props里面的属性。
+      // 非props特性：父组件向子组件传递了一个属性，但是子组件没有在props接收这个属性，那在子组件内就没办法使用这个属性，并且在html dom标签属性内会把这个属性展示出来
+      props: {
+        num: {
+          type: Number,
+          required: false, // 必填
+          default: 10,     // 默认值
+        },
+        content: {
+          type: String,
+          required: false,
+          validator: function(value) {
+            return (value.length > 5)
+          }
+        }
+      },
+      data: function() {
+        return {
+          number: this.num,
+        }
+      },
+      template: '<div @click="handleClick">{{number}}</div>',
+      methods: {
+        handleClick: function(){
+          this.number++
+          this.$emit('change', this.number)
+        },
+      }
+    })
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        one: 0,
+        two: 0,
+      },
+      computed: {
+        total() {
+          return this.one + this.two;
+        }
+      },
+      methods: {
+        handleClick: function() {
+          // vue内操作dom
+          const dom = this.$refs.hello;
+          console.log(dom.innerText);
+        },
+        handleChangeOne(num) {
+          this.one = num;
+        },
+        handleChangeTwo(num) {
+          this.two = num
+        }
+      }
+    })
+  </script>
+</body>
+</html>

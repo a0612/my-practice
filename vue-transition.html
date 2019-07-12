@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Vue 中的css动画原理(通过在某一时刻在某些元素上增加class来实现的动画效果)</title>
+  <script src="./vue.js"></script>
+  <script src="./velocity.js"></script>
+  <link rel="stylesheet" href="./animate.css" type="text/css">
+  <style>
+    @keyframes bounce-in {
+      0% {
+        transform: scale(0);
+      }
+      50% {
+        transform: scale(1.5);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+    .enter-active{
+      animation: bounce-in 1s;
+    }
+    .leave-active{
+      animation: bounce-in 1s reverse;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- 如果不写fade，vue默认的是v -->
+    <!-- 具体使用：https://cn.vuejs.org/v2/api/#transition -->
+    <transition
+      :duration="1000"
+      name="fade"
+      appear
+      @before-enter="handleBeforeEnter"
+      @enter="handleEnter"
+      @after-enter="handleAfterEnter"
+      appear-active-class="animated wobble"
+      enter-active-class="animated pulse"
+      leave-active-class="animated swing"
+    >
+      <!-- 多个元素的时候需要在div上加一个key -->
+      <div v-show="show">hello World</div>
+    </transition>
+    <button @click="handleToggleShow">切换显示</button>
+  </div>
+  <script>
+    var vm = new Vue({
+      el: "#app",
+      data: {
+        show: true,
+      },
+      methods: {
+        handleToggleShow() {
+          this.show = !this.show;
+        },
+        // js的动画库，velocity，详情查看：http://www.velocityjs.org/
+        handleBeforeEnter(el) {
+          el.style.color = "red"
+        },
+        handleEnter(el, done) {
+          Velocity(el, {
+            option: 1,
+          },{
+            duration: 1000,
+            complete: done,
+          })
+        },
+        handleAfterEnter(el) {
+          console.log('动画结束')
+        }
+      }
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Vue中列表渲染</title>
+  <script src="./vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <ul>
+      <!-- key值要唯一，但是尽量可复用，提高性能 -->
+      <!-- 数组循环是for...in...，对象循环是for...of... -->
+      <li class="list-item" v-for="(item, index) in list" :key="'listItem' + index">{{ item }}</li>
+    </ul>
+  </div>
+  <script>
+    // 数组操作
+    // push, pop, shift, unshift, splice, slice, resver, sort
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        list: [
+          'aaa',
+          'bbb',
+          'ccc',
+          'ddd',
+          'eee',
+        ]
+      }
+    })
+  </script>
+</body>
+</html>
