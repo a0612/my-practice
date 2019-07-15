@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>CSS3 实现3D环形进度条(主要是linear-gradient属性)</title>
+  <style type="text/css">
+    html *{
+      margin: 0;
+      padding: 0;
+      box-sizing: content-box;
+    }
+    .container{
+      width: 600px;
+      height: 300px;
+      margin: 0 auto;
+      background-color: rgba(0,0,0,.3);
+    }
+    .progress-container{
+      display: inline-block;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      border: 10px solid #5d6771;
+      background-color: #fffde8;
+      box-shadow: 0 2px 15px rgba(0,0,0,.3);
+      position: relative;
+    }
+    .progress-container b:after{
+      content: '50%';
+      color: #fffde8;
+      text-shadow: 0 1px 2px rgba(0,0,0,.6);
+      position: absolute;
+      font-weight: bold;
+      width: 50%;
+      height: 50%;
+      left: 50%;
+      top: 50%;
+      margin-left: -25%;
+      margin-top: -25%;
+      background-color: #2f3439;
+      border-radius: 50%;
+      text-align: center;
+      font-size: 30px;
+      box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3) inset, 0 0 0 10px #5d6771;
+      line-height: 90px;
+    }
+    .progress-container:before,.progress-container:after{
+      content: '';
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      margin-left: -17.5px;
+      margin-top: -17.5px;
+      background-color: #fffde8;
+      z-index: 1000;
+    }
+    .progress-65{
+      /* background-image: linear-gradient(to right, #E94E65, #15A892 20%, #A89215 80%, #1574A8);
+      背景色从左到右开始渐变，最左边是玫红，在元素宽度20%的位置变成青色，80%的位置变成黄色，最后是蓝色。
+      deg */
+      background-image: linear-gradient(-36deg, #fffde8 50%, transparent 50%, transparent), linear-gradient(270deg, #fffde8 50%, #5d6771 50%, #5d6771);
+    }
+    .progress-65:before{
+      transform: rotate(234deg) translate(0, -72.5px);
+    }
+    .progress-65:after{
+      transform: translate(0, -72.5px);
+    }
+    .progress-65 b:after{
+      content: '65%';
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="progress-container progress-65">
+      <b></b>
+    </div>
+  </div>
+</body>
+</html>
