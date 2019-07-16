@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>多列multi-columns瀑布流布局的demo</title>
+  <script type="text/javascript">
+    var list = [
+        {
+          "id": 75686,
+          "pic": "https://img.mishifeng.com/FtC316_PmZNgWt1MPx3Q6pAMH2v-?imageView2/1/w/400/h/530/format/jpg/q/75",
+          "width": 400,
+          "height": 530,
+          "title": "🌧 下雨天，一起分享你最爱的美食",
+          "user_id": 1000005505,
+          "user_nickname": "觅小蜂",
+          "user_avatar": "https://img.mishifeng.com/FuQ8IIggYHYKv14CutEIBN0hUgeh?imageView2/1/w/100/h/100/format/webp/q/75",
+          "quality_user": 0,
+          "likes_num": 136,
+          "likes_status": false
+        },
+        {
+          "id": 77511,
+          "pic": "https://img.mishifeng.com/FmIDuUOXE_6sJk7yteTOIoDD1nhv?imageView2/1/w/400/h/533/format/jpg/q/75",
+          "width": 400,
+          "height": 533,
+          "title": "武康庭内的一株Coffee Tree🌿",
+          "user_id": 1000080562,
+          "user_nickname": "小吴老师在吃饭",
+          "user_avatar": "http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJKGjP4osqZaR5WFrUcicZKF6hCgVfjWicibHl9DThfW0ojHFxPoM6LF93HsZ03QToIR810zIHEJ4iaxw/132",
+          "quality_user": 0,
+          "likes_num": 54,
+          "likes_status": false
+        },
+        {
+          "id": 77570,
+          "pic": "https://img.mishifeng.com/FiFVNEKF1H-CFlPCSdILsjJ6pgu9?imageView2/1/w/400/h/533/format/jpg/q/75",
+          "width": 400,
+          "height": 533,
+          "title": "藏在巨鹿路的沙滩风餐厅，有会喷火的意面",
+          "user_id": 1000001851,
+          "user_nickname": "吴太太",
+          "user_avatar": "https://img.mishifeng.com/Fvl7fgQM6oYYfZvFTD6kN9qsEEBX?imageView2/1/w/100/h/100/q/75",
+          "quality_user": 0,
+          "likes_num": 26,
+          "likes_status": false
+        },
+        {
+          "id": 77479,
+          "pic": "https://img.mishifeng.com/FgxpgBSavdf8klWVLg_Qj16iApGY?imageView2/1/w/400/h/400/format/jpg/q/75",
+          "width": 400,
+          "height": 400,
+          "title": "午市性价比很高的定食套餐",
+          "user_id": 1000001748,
+          "user_nickname": "我是美食家，不是吃货",
+          "user_avatar": "https://img.mishifeng.com/FgQNbS9YTxZaikHRARMERQ67QDL3?imageView2/1/w/100/h/100/format/jpg/q/75",
+          "quality_user": 0,
+          "likes_num": 76,
+          "likes_status": false
+        },
+        {
+          "id": 77764,
+          "pic": "https://img.mishifeng.com/Fg5WDVI1z_xtnMgzUgoUSx5lmpPH?imageView2/1/w/400/h/400/format/jpg/q/75",
+          "width": 400,
+          "height": 400,
+          "title": "快来看看自称“行家”的海鲜火锅有多精致",
+          "user_id": 1000012854,
+          "user_nickname": "🤩๓Katherine๓🤣",
+          "user_avatar": "http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJnibBNBwJ2b4K2TrpcAiag2T52mZ00iazXIjmKW6kPVTbiaGAxZvicTQHeyboudtItZYc8PEGopZ7ASrg/132",
+          "quality_user": 0,
+          "likes_num": 6,
+          "likes_status": false
+        },
+        {
+          "id": 77480,
+          "pic": "https://img.mishifeng.com/FlPtSvdn3XCV7Di9n8snaYmD6USx?imageView2/1/w/400/h/400/format/jpg/q/75",
+          "width": 400,
+          "height": 400,
+          "title": "必吃榜日式烧肉",
+          "user_id": 1000001748,
+          "user_nickname": "我是美食家，不是吃货",
+          "user_avatar": "https://img.mishifeng.com/FgQNbS9YTxZaikHRARMERQ67QDL3?imageView2/1/w/100/h/100/format/jpg/q/75",
+          "quality_user": 0,
+          "likes_num": 59,
+          "likes_status": false
+        },
+        {
+          "id": 76967,
+          "pic": "https://img.mishifeng.com/FqxCH8aqq8UmITwJIrWIVGvFV00p?imageView2/1/w/400/h/533/format/jpg/q/75",
+          "width": 400,
+          "height": 533,
+          "title": "糕团大王✨大大方方让你一次吃个够！",
+          "user_id": 1000743441,
+          "user_nickname": "17岁19号",
+          "user_avatar": "https://img.mishifeng.com/FkpsbEayv7imbuTq_UL634tS-dWo?imageView2/1/w/100/h/100/q/75",
+          "quality_user": 0,
+          "likes_num": 105,
+          "likes_status": false
+        },
+        {
+          "id": 77249,
+          "pic": "https://img.mishifeng.com/FrTN74GskgBpqTvYFJ3JWUMuje1_?imageView2/1/w/400/h/400/format/jpg/q/75",
+          "width": 400,
+          "height": 400,
+          "title": "韩式烤肉爱好者深夜食堂",
+          "user_id": 1000075330,
+          "user_nickname": "洛小汐",
+          "user_avatar": "https://img.mishifeng.com/FjiHLNIiQj4W49wr4KUJmdFckLCP?imageView2/1/w/100/h/100/format/jpg/q/75",
+          "quality_user": 0,
+          "likes_num": 46,
+          "likes_status": false
+        },
+        {
+          "id": 77198,
+          "pic": "https://img.mishifeng.com/Fuv6sNWF49wSct3PNbuzN5i57fBE?imageView2/1/w/400/h/532/format/jpg/q/75",
+          "width": 400,
+          "height": 532,
+          "title": "高颜值恋暖新品冰淇淋饮品",
+          "user_id": 1000001650,
+          "user_nickname": "Sasa0828",
+          "user_avatar": "https://img.mishifeng.com/Ft4Nz6hLelw6Pzpgf3_7ItJnLgmX?imageView2/1/w/100/h/100/q/75",
+          "quality_user": 0,
+          "likes_num": 58,
+          "likes_status": false
+        },
+        {
+          "id": 77774,
+          "pic": "https://img.mishifeng.com/FonVOD5xX44vxyUrBegtnbqyy2vX?imageView2/1/w/400/h/533/format/jpg/q/75",
+          "width": 400,
+          "height": 533,
+          "title": "环球港里的山葵拌日料有特色",
+          "user_id": 1000026169,
+          "user_nickname": "森女系",
+          "user_avatar": "https://img.mishifeng.com/FrTP3pM9-gEV2DA4Ja5Gg203wX5H?imageView2/1/w/100/h/100/format/jpg/q/75",
+          "quality_user": 0,
+          "likes_num": 8,
+          "likes_status": false
+        },
+        {
+          "id": 77498,
+          "pic": "https://img.mishifeng.com/FvQ7BN2ijGbOk3RR7ZbxAtJ0o_pa?imageView2/1/w/400/h/300/format/jpg/q/75",
+          "width": 400,
+          "height": 300,
+          "title": "周日外滩Brunch走一个",
+          "user_id": 1001147319,
+          "user_nickname": "吃吃的爱",
+          "user_avatar": "https://img.mishifeng.com/Fu3Zljh4GhL0QXz2A2rbRvjTThOC?imageView2/1/w/100/h/100/q/75",
+          "quality_user": 0,
+          "likes_num": 55,
+          "likes_status": false
+        },
+        {
+          "id": 77633,
+          "pic": "https://img.mishifeng.com/FhUZmx7WzGTvg-quTNVkx1dL-T1w?imageView2/1/w/400/h/400/format/jpg/q/75",
+          "width": 400,
+          "height": 400,
+          "title": "🎉🎉性价比超高的日料放题🎊🎊",
+          "user_id": 1000717260,
+          "user_nickname": "不会蹦跶的璐璐",
+          "user_avatar": "https://img.mishifeng.com/FiPM8GUZSlcsoKRPNw0k8iKam90F?imageView2/1/w/100/h/100/format/webp/q/75",
+          "quality_user": 0,
+          "likes_num": 13,
+          "likes_status": false
+        },
+        {
+          "id": 77794,
+          "pic": "https://img.mishifeng.com/FtRjJilcGfBzVgnaL-J--7YJP76H?imageView2/1/w/400/h/533/format/jpg/q/75",
+          "width": 400,
+          "height": 533,
+          "title": "晚餐后想听一首歌",
+          "user_id": 1000002299,
+          "user_nickname": "蓝蓝蓝",
+          "user_avatar": "https://img.mishifeng.com/FuXPw9UrQ6aX7JbNcXgCqPUFLezk?imageView2/1/w/100/h/100/format/jpg/q/75",
+          "quality_user": 0,
+          "likes_num": 6,
+          "likes_status": false
+        },
+        {
+          "id": 77618,
+          "pic": "https://img.mishifeng.com/FvuEpHZ4A7GC4T4K7D8Q8AwaB22w?imageView2/1/w/400/h/498/format/jpg/q/75",
+          "width": 400,
+          "height": 498,
+          "title": "萨瓦迪卡～💓",
+          "user_id": 1000760669,
+          "user_nickname": "开心小桃桃",
+          "user_avatar": "https://img.mishifeng.com/FuausMk7lQcf_6zpvPfkM_VQtJoX?imageView2/1/w/100/h/100/format/jpg/q/75",
+          "quality_user": 0,
+          "likes_num": 24,
+          "likes_status": false
+        },
+        {
+          "id": 77738,
+          "pic": "https://img.mishifeng.com/FmKVF5Wo4LaJXziEIr-Q4CszuWr4?imageView2/1/w/400/h/533/format/jpg/q/75",
+          "width": 400,
+          "height": 533,
+          "title": "Tims缤谷广场店打卡😁",
+          "user_id": 1000081166,
+          "user_nickname": "桃筱桃",
+          "user_avatar": "https://img.mishifeng.com/Fo90U3Rwa2rpQYQuXdgdGUMUE1iO?imageView2/1/w/100/h/100/q/75",
+          "quality_user": 0,
+          "likes_num": 13,
+          "likes_status": false
+        },
+        {
+          "id": 77620,
+          "pic": "https://img.mishifeng.com/FhT2fFqClL1YCASgMSj1n5zEO8Sk?imageView2/1/w/400/h/400/format/jpg/q/75",
+          "width": 400,
+          "height": 400,
+          "title": "超美味的咸蛋黄虾球",
+          "user_id": 1000595515,
+          "user_nickname": "觅食蜂D94JOP",
+          "user_avatar": "http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTK7acK1JpiaPw8qp7MVvHhR8T9Y967DYhouS6ajFQZIrKiauI8nWj9LV2RCwIHuAWK9P0jrNn1GHbpQ/132",
+          "quality_user": 0,
+          "likes_num": 20,
+          "likes_status": false
+        },
+        {
+          "id": 77647,
+          "pic": "https://img.mishifeng.com/FqCUtGld-1XQ7WvbM2_st0qhQ_ek?imageView2/1/w/400/h/400/format/jpg/q/75",
+          "width": 400,
+          "height": 400,
+          "title": "大闸蟹hairy crab Buffet",
+          "user_id": 1000017741,
+          "user_nickname": "Dc mars",
+          "user_avatar": "https://img.mishifeng.com/Fn6fRKJKr3U-KjkRhQqJl2NQJD4y?imageView2/1/w/100/h/100/format/jpg/q/75",
+          "quality_user": 0,
+          "likes_num": 16,
+          "likes_status": false
+        },
+        {
+          "id": 77507,
+          "pic": "https://img.mishifeng.com/FjNmwDvTfo70KH_0hSfhuGLEcMEp?imageView2/1/w/400/h/533/format/jpg/q/75",
+          "width": 400,
+          "height": 533,
+          "title": "🍤小龙虾&烧烤🍢完美的夏天！",
+          "user_id": 1000760669,
+          "user_nickname": "开心小桃桃",
+          "user_avatar": "https://img.mishifeng.com/FuausMk7lQcf_6zpvPfkM_VQtJoX?imageView2/1/w/100/h/100/format/jpg/q/75",
+          "quality_user": 0,
+          "likes_num": 57,
+          "likes_status": false
+        },
+        {
+          "id": 77370,
+          "pic": "https://img.mishifeng.com/FvNOFFkReM3gYf9XXY1CmlspOpmN?imageView2/1/w/400/h/300/format/jpg/q/75",
+          "width": 400,
+          "height": 300,
+          "title": "健康美味早午餐",
+          "user_id": 1001142692,
+          "user_nickname": "福福福巴黎",
+          "user_avatar": "https://img.mishifeng.com/FhvJV9_q14Z0sR1CL9AjsKMI1kDn?imageView2/1/w/100/h/100/format/jpg/q/75",
+          "quality_user": 0,
+          "likes_num": 63,
+          "likes_status": false
+        },
+        {
+          "id": 77474,
+          "pic": "https://img.mishifeng.com/FmgPLlIBThgGDAQNF0KOJmR5anCV?imageView2/1/w/400/h/533/format/jpg/q/75",
+          "width": 400,
+          "height": 533,
+          "title": "正能量满满",
+          "user_id": 1000013707,
+          "user_nickname": "swinng",
+          "user_avatar": "https://img.mishifeng.com/FgFvNNoxWuuLNOTk1KuDNw39GjgL?imageView2/1/w/100/h/100/q/75",
+          "quality_user": 0,
+          "likes_num": 63,
+          "likes_status": false
+        }
+      ]
+  </script>
+  <style type="text/css">
+  html *{
+    padding: 0;
+    margin: 0;
+  }
+  /* 如果用flex来实现的话需要在容器设置高度，然后按列来布局 */
+  .masonry{
+    display: flex;
+    flex-flow: column wrap;
+    width: 70%;
+    margin: 20px auto;
+    flex-direction: column;
+    height: 100vh;
+  }
+  /* 利用multi-columns来实现 */
+  .masonry{
+    column-count: 2;
+    column-gap: 20px;
+  }
+  .item{
+    break-inside: avoid;
+  }
+  .item-content img{
+    width: 100%;
+    display: block;
+  }
+  </style>
+</head>
+<body>
+  <div class="page-container">
+    <div class="masonry">
+      <div class="item">
+        <div class="item-content">
+          1
+          <img src="https://img.mishifeng.com/FtC316_PmZNgWt1MPx3Q6pAMH2v-?imageView2/1/w/400/h/530/format/jpg/q/75">
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-content item-small">
+          2
+          <img src="https://img.mishifeng.com/FmIDuUOXE_6sJk7yteTOIoDD1nhv?imageView2/1/w/400/h/533/format/jpg/q/75">
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-content item-mid">
+          3
+          <img src="https://img.mishifeng.com/FiFVNEKF1H-CFlPCSdILsjJ6pgu9?imageView2/1/w/400/h/533/format/jpg/q/75">
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-content">
+          4
+          <img src="https://img.mishifeng.com/FgxpgBSavdf8klWVLg_Qj16iApGY?imageView2/1/w/400/h/400/format/jpg/q/75">
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-content">
+          5
+          <img src="https://img.mishifeng.com/Fg5WDVI1z_xtnMgzUgoUSx5lmpPH?imageView2/1/w/400/h/400/format/jpg/q/75" alt="">
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-content">
+          6
+          <img src="https://img.mishifeng.com/FlPtSvdn3XCV7Di9n8snaYmD6USx?imageView2/1/w/400/h/400/format/jpg/q/75" alt="">
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-content">
+          7
+          <img src="https://img.mishifeng.com/FmgPLlIBThgGDAQNF0KOJmR5anCV?imageView2/1/w/400/h/533/format/jpg/q/75" alt="">
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-content">
+          8
+          <img src="https://img.mishifeng.com/FvNOFFkReM3gYf9XXY1CmlspOpmN?imageView2/1/w/400/h/300/format/jpg/q/75" alt="">
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-content">
+          9
+          <img src="https://img.mishifeng.com/FjNmwDvTfo70KH_0hSfhuGLEcMEp?imageView2/1/w/400/h/533/format/jpg/q/75" alt="">
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-content">
+          10
+          <img src="https://img.mishifeng.com/FhT2fFqClL1YCASgMSj1n5zEO8Sk?imageView2/1/w/400/h/400/format/jpg/q/75" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

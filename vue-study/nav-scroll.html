@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>顶部tab滚动，tab切换</title>
+  <script src="./vue.js"></script>
+  <script src="./tween.js"></script>
+  <style type="text/css">
+  html *{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  html, body{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  #app{
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+  .tabs-container{
+    width: 100%;
+    padding: 0 20px;
+  }
+  .tabs-block{
+    width: 100%;
+    overflow-x: scroll;
+    display: flex;
+    white-space: nowrap;
+    font-size: 14px;
+    padding: 10px 0;
+    position: relative;
+  }
+  .tag-line{
+    position: absolute;
+    border-top: 2px solid #fcde53;
+    width: 100%;
+    bottom: 8px;
+    left: 0;
+    transition: all 1s;
+  }
+  .tab-item{
+    color: #929292;
+    padding: 0 10px;
+  }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <tabs-container :list="list" @clickitem="handleClick"></tabs-container>
+  </div>
+  <script>
+    Vue.component('tabs-container', {
+      props: {
+        list: {
+          type: Array,
+          default: [],
+        }
+      },
+      data: function(){
+        return {
+          lineStyle: {
+            left: '10px',
+          }
+        }
+      },
+      mounted(){
+        var position = this.$el.querySelectorAll('.tab-text')[0].getBoundingClientRect();
+        this.lineStyle = {
+          width: `${position.width}px`,
+          left: `${position.left - 20}px`
+        }
+        function animate(time) {
+            requestAnimationFrame(animate);
+            TWEEN.update(time);
+        }
+        animate(animate);
+      },
+      template:  `<div class="tabs-container">
+                    <nav class="tabs-block">
+                      <div class="tab-item" v-for="(item, index) in list" :key="item.id" @click="handleTagClick(item, index)">
+                        <span class="tab-text">{{item.text}}</span>
+                      </div>
+                      <div class="tag-line" :style="lineStyle"></div>
+                    </nav>
+                  </div>`,
+      methods: {
+        handleTagClick: function(item, index) {
+          //  处理底部线条的滑动
+          var tabItemDomList = this.$el.querySelectorAll('.tab-item');
+          var lineWidth = tabItemDomList[index].getBoundingClientRect().width - 20;
+          var left = 0;
+          for (var i = 0; i < index; i++) {
+            left = left + tabItemDomList[i].getBoundingClientRect().width;
+          }
+          // 父盒子里面左边还有个padding-left
+          left += 10
+          this.lineStyle = {
+            width: `${lineWidth}px`,
+            left: `${left}px`
+          }
+          // 处理滑块居中
+          var tabBlockDom = this.$el.querySelectorAll('.tabs-block')[0];
+          var clientWidth = tabBlockDom.getBoundingClientRect().width; // 外部盒子的大小
+          var centerLeft = (left + lineWidth / 2); // 点击按钮的中间位置
+          var scrollLeft = centerLeft - (clientWidth / 2);
+          // tabBlockDom.scrollLeft = scrollLeft;
+          // 滑块滑动到中间的动画
+          var currentLeft = tabBlockDom.scrollLeft
+          var myTween = new TWEEN.Tween({
+            left: currentLeft,
+          })
+            .to({ left: scrollLeft }, 500)
+            .easing(TWEEN.Easing.Quadratic.Out)
+            .onUpdate(function(data) {
+              tabBlockDom.scrollLeft = data.left;
+            })
+            .start()
+
+          // 处理点击事件（调接口拿数据等其他的操作）
+          this.dealItemClick(item)
+        },
+        dealItemClick: function(item) {
+          // 处理点击事件
+          this.$emit('clickitem', item)
+        },
+      },
+    })
+    var list = [
+      {
+        id: 101,
+        text: '推荐'
+      },
+      {
+        id: 102,
+        text: '宵夜盛宴'
+      },
+      {
+        id: 103,
+        text: '网红'
+      },
+      {
+        id: 104,
+        text: '中餐'
+      },
+      {
+        id: 105,
+        text: '西餐'
+      },
+      {
+        id: 106,
+        text: '火锅/自助'
+      },
+      {
+        id: 107,
+        text: '日韩料理'
+      },
+      {
+        id: 108,
+        text: '当季美食'
+      },
+      {
+        id: 109,
+        text: '大家都说好'
+      },
+      {
+        id: 110,
+        text: '不醉不归'
+      },
+    ]
+    var vm = new Vue({
+      el: '#app',
+      data: function() {
+        return {
+          list: list,
+        }
+      },
+      methods: {
+        handleClick: function(item) {
+          console.log(`点击的数据是${JSON.stringify(item)}`)
+        },
+      },
+    })
+  </script>
+</body>
+</html>
